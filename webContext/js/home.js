@@ -35,6 +35,7 @@ $(function() {
 	getServerOS();// 得到服务器操作系统信息
 	showFolderView("root");// 显示根节点页面视图
     getCountry();//获取所有国家（wzy）
+    getFeature();//获取所有功能（wzy）
 
 	// 点击空白处取消选中文件（已尝试兼容火狐，请期待用户反馈，如不好使再改）
 	$(document).click(function(e) {
@@ -388,6 +389,22 @@ function getCountry(){
         error : function() {
         }
 	});
+}
+
+//获取所有功能（wzy）
+function getFeature(){
+    $.ajax({
+        type : 'POST',
+        url : 'homeController/getFeatureView.ajax',
+        success : function(result) {
+            featureView = eval("(" + result + ")");
+            $.each(featureView,function(i,item){
+                $("#ff").append("<option value="+item.featureId+">"+item.featureName+"</option>");
+            });
+        },
+        error : function() {
+        }
+    });
 }
 
 // 获取实时文件夹视图
@@ -1156,6 +1173,9 @@ function showUploadFileModel() {
 	$("#uploadFileAlert").removeClass("alert");
 	$("#uploadFileAlert").removeClass("alert-danger");
 	$("#uploadFileAlert").text("");
+
+    // $("#ff").find("option:selected").text(""); 初始化功能下拉菜单
+
 	if(isUpLoading==false){
 		$("#filepath").removeAttr("disabled");
 		$("#uploadfile").val("");

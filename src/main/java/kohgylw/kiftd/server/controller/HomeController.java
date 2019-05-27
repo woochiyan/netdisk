@@ -41,6 +41,8 @@ public class HomeController {
 	private PlayAudioService pas;
 	@Resource
 	private CountryService cs;
+	@Resource
+	private FeatureService featureService;
 
 
 	@RequestMapping({ "/getServerOS.ajax" })
@@ -78,6 +80,13 @@ public class HomeController {
 	@ResponseBody
 	public String getCountryView(final HttpServletRequest request) {
 		return cs.getCountryViewToJson(request);
+	}
+
+	//获取所有功能(wzy)
+	@RequestMapping(value = { "/getFeatureView.ajax" }, produces = { CHARSET_BY_AJAX })
+	@ResponseBody
+	public String getFeatureView(final HttpServletRequest request) {
+		return featureService.getFeatureViewToJson(request);
 	}
 
 	@RequestMapping({ "/doLogout.ajax" })

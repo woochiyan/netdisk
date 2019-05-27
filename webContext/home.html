@@ -362,6 +362,17 @@
 						placeholder="请点击选择要上传的文件……"> <input type="file"
 						id="uploadfile" style="display: none;" onchange="getInputUpload()"
 						multiple="multiple"> <br />
+					<!-- <h5>国家、功能选择栏：</h5> -->
+					<select id="area" class="selectpicker show-tick" title="请选择码流国家" name="area" data-live-search="true" data-size="5">
+						<!--<optgroup label="Country">-->
+						<!--</optgroup>-->
+					</select>
+					<select id="ff" class="selectpicker show-tick" multiple title="请选择码流功能" name='form2' data-live-search="true" data-size="5"
+							 multiple>
+						<!--<optgroup label="Feature">-->
+						<!--</optgroup>-->
+					</select>
+					<br />
 					<h5>
 						上传进度：<span id="filecount"></span>
 					</h5>
@@ -372,26 +383,7 @@
 							<span class="sr-only"></span>
 						</div>
 					</div>
-					<!-- <h5>国家、功能选择栏：</h5> -->
-					<select id="area" class="selectpicker show-tick" title="请选择码流国家" name="area" data-live-search="true" data-size="5">
 
-					</select>
-					
-					<select  id="ff" class="selectpicker show-tick" multiple title="请选择码流功能" name='form2' data-live-search="true" data-size="5"
-					multiple>
-						<optgroup label="Function">
-							<option>EPG</option>
-							<option>Subtitle</option>
-							<option>Lock</option>
-							<option>场测码流</option>
-							<option>Text</option>
-							<option>Input</option>
-							<option>Youtube</option>
-							<option>Netflix</option>
-							<option>APP</option>
-							<option>hahahah</option>
-						</optgroup>
-					</select>
 					<!-- <div class="panel panel-default">
 						<div class="panel-body">
 							<div id="uploadstatus" class="uploadstatusbox"></div>
