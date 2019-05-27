@@ -9,6 +9,10 @@
 			property="fileParentFolder" />
 		<result column="file_creation_date" jdbcType="VARCHAR"
 			property="fileCreationDate" />
+		<result column="file_country" jdbcType="VARCHAR"
+			property="fileCountry" />
+			<result column="file_function" jdbcType="VARCHAR"
+			property="fileFunction" />	
 		<result column="file_creator" jdbcType="VARCHAR" property="fileCreator" />
 		<result column="file_path" jdbcType="VARCHAR" property="filePath" />
 	</resultMap>
@@ -21,7 +25,7 @@
 
 	<insert id="insert" parameterType="kohgylw.kiftd.server.model.Node">
 		INSERT INTO FILE
-		VALUES(#{fileId,jdbcType=VARCHAR},#{fileName,jdbcType=VARCHAR},#{fileSize,jdbcType=VARCHAR},#{fileParentFolder,jdbcType=VARCHAR},#{fileCreationDate,jdbcType=VARCHAR},#{fileCreator,jdbcType=VARCHAR},#{filePath,jdbcType=VARCHAR})
+		VALUES(#{fileId,jdbcType=VARCHAR},#{fileName,jdbcType=VARCHAR},#{fileSize,jdbcType=VARCHAR},#{fileParentFolder,jdbcType=VARCHAR},#{fileCreationDate,jdbcType=VARCHAR},#{fileCountry,jdbcType=VARCHAR},#{fileFunction,jdbcType=VARCHAR},#{fileCreator,jdbcType=VARCHAR},#{filePath,jdbcType=VARCHAR})
 	</insert>
 
 	<update id="update" parameterType="kohgylw.kiftd.server.model.Node">
@@ -29,7 +33,9 @@
 		#{fileName,jdbcType=VARCHAR},file_size =
 		#{fileSize,jdbcType=VARCHAR},file_parent_folder =
 		#{fileParentFolder,jdbcType=VARCHAR},file_creation_date =
-		#{fileCreationDate,jdbcType=VARCHAR},file_creator =
+		#{fileCreationDate,jdbcType=VARCHAR},file_country =
+		#{fileCountry,jdbcType=VARCHAR},file_function =
+		#{fileFunction,jdbcType=VARCHAR},file_creator =
 		#{fileCreator,jdbcType=VARCHAR},file_path =
 		#{filePath,jdbcType=VARCHAR} WHERE file_id =
 		#{fileId,jdbcType=VARCHAR}

@@ -8,17 +8,19 @@
 <meta name="renderer" content="webkit">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<title>KIFT</title>
+<title>SCBC</title>
 <!-- Bootstrap基本框架 -->
 <link rel="stylesheet" href="css/bootstrap.min.css">
 <!-- 全局样式 -->
-<link rel="stylesheet" href="css/overrall.min.css">
+<link rel="stylesheet" href="css/overrall.css">
 <!-- 图片查看器插件 -->
 <link rel="stylesheet" href="css/viewer.min.css">
 <!-- 音乐播放器插件 -->
 <link rel="stylesheet" href="css/APlayer.min.css">
 <!-- 页面图标 -->
 <link rel="icon" type="image/x-icon" href="css/icon.png" />
+<!-- bootstrap-select部分 -->
+<link href="bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet" />
 <!-- 对旧浏览器的支持部分... -->
 <!--[if lt IE 9]>
       <script src="js/html5shiv.min.js"></script>
@@ -34,8 +36,8 @@
 			<div class="col-md-12">
 				<div class="titlebox">
 					<span class="titletext"> <!-- 主标题，如需修改请替换后方标签内的文字 --> <em>
-							青阳网络文件传输系统 <small> <!-- 副标题，如需修改请替换后方标签内的文字 --> <span
-								class="graytext">KIFT</span>
+							码流管理系统 <small> <!-- 副标题，如需修改请替换后方标签内的文字 --> <span
+								class="graytext">SCBC</span>
 						</small>
 					</em>
 					</span> <span id="tb" class="rightbtn"></span>
@@ -126,8 +128,12 @@
 									aria-hidden="true" style="float: right"></span></th>
 								<th class="hiddenColumn" onclick="sortbycd()">创建日期<span
 									id="sortByCD" aria-hidden="true" style="float: right"></span></th>
-								<th onclick="sortbyfs()">大小<span id="sortByFS"
+								<th  onclick="sortbyfs()">大小<span id="sortByFS"
 									aria-hidden="true" style="float: right"></span></th>
+								<th class="hiddenColumn" onclick="sortbyfc()">国家<span
+									id="sortByFC" aria-hidden="true" style="float: right"></span></th>
+								<th onclick="sortbyff()">功能<span id="sortByFF"
+									aria-hidden="true" style="float: right"></span></th>	
 								<th class="hiddenColumn" onclick="sortbycn()">创建者<span
 									id="sortByCN" aria-hidden="true" style="float: right"></span></th>
 								<th onclick="showOriginFolderView()">操作</th>
@@ -173,6 +179,7 @@
 									placeholder="请输入密码……">
 							</div>
 						</div>
+						<div class="form-group hidden" id="vercodebox"></div>
 						<div id="alertbox" role="alert"></div>
 					</form>
 				</div>
@@ -365,12 +372,32 @@
 							<span class="sr-only"></span>
 						</div>
 					</div>
-					<h5>上传状态：</h5>
-					<div class="panel panel-default">
+					<!-- <h5>国家、功能选择栏：</h5> -->
+					<select id="area" class="selectpicker show-tick" title="请选择码流国家" name="area" data-live-search="true" data-size="5">
+
+					</select>
+					
+					<select  id="ff" class="selectpicker show-tick" multiple title="请选择码流功能" name='form2' data-live-search="true" data-size="5"
+					multiple>
+						<optgroup label="Function">
+							<option>EPG</option>
+							<option>Subtitle</option>
+							<option>Lock</option>
+							<option>场测码流</option>
+							<option>Text</option>
+							<option>Input</option>
+							<option>Youtube</option>
+							<option>Netflix</option>
+							<option>APP</option>
+							<option>hahahah</option>
+						</optgroup>
+					</select>
+					<!-- <div class="panel panel-default">
 						<div class="panel-body">
 							<div id="uploadstatus" class="uploadstatusbox"></div>
 						</div>
 					</div>
+					 -->
 					<div id="uploadFileAlert" role="alert"></div>
 					<div id="selectFileUpLoadModelAlert" class="alert alert-danger"
 						role="alert">
@@ -645,7 +672,7 @@
 	<!-- 返回顶部按钮（隐藏式） -->
 	<div id="gobacktotopbox" class="gobacktopbox text-center hidden">
 		<button type="button" onclick="goBackToTop()" class="gobacktopbutton">
-			返回顶部 <span class="glyphicon glyphicon-eject" aria-hidden="true"></span> 
+			返回顶部 <span class="glyphicon glyphicon-eject" aria-hidden="true"></span>
 		</button>
 	</div>
 	<!-- end 返回顶部按钮 -->
@@ -662,5 +689,7 @@
 <!-- 音乐播放器 -->
 <script type="text/javascript" src="js/APlayer.min.js"></script>
 <!-- 页面操作定义 -->
-<script type="text/javascript" src="js/home.min.js"></script>
+<script type="text/javascript" src="js/home.js"></script>
+<!-- bootstrap-select -->
+<script src="bootstrap-select/dist/js/bootstrap-select.min.js"></script>
 </html>

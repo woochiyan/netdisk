@@ -2,6 +2,7 @@ package kohgylw.kiftd.server.service.impl;
 
 import kohgylw.kiftd.server.service.*;
 
+import org.springframework.jdbc.support.JdbcUtils;
 import org.springframework.stereotype.*;
 import kohgylw.kiftd.server.mapper.*;
 import javax.annotation.*;
@@ -15,6 +16,8 @@ import org.springframework.web.multipart.*;
 import javax.servlet.http.*;
 import java.io.*;
 import java.nio.charset.Charset;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import kohgylw.kiftd.server.util.*;
 import java.util.*;
@@ -99,15 +102,38 @@ public class FileServiceImpl extends RangeFileStreamWriter implements FileServic
 		}
 		return gson.toJson(cufr);// 以JSON格式写回该结果
 	}
-
+    //
+	
+	/*
+	public void doPost(HttpServletRequest request, HttpServletResponse response) {
+    //查询所有部门的名称
+		String sql="SELECT DISTINCT part FROM person_info" ;
+		ResultSet rs=JdbcUtils.select(sql, null);
+		List<String> list=new ArrayList<String>();
+		try {
+			while(rs.next()){
+				list.add(rs.getString(1));
+	
+			}
+			request.setAttribute("alllist", list);
+			request.getRequestDispatcher("/SearchPosition.jsp").forward(request, response);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+*/
+	
 	// 执行上传操作，接收文件并存入文件节点
 	public String doUploadFile(final HttpServletRequest request, final HttpServletResponse response,
-			final MultipartFile file) {
+			final MultipartFile file,String area,String ff) {
 		String account = (String) request.getSession().getAttribute("ACCOUNT");
 		final String folderId = request.getParameter("folderId");
 		final String originalFileName = new String(file.getOriginalFilename().getBytes(Charset.forName("UTF-8")),
 				Charset.forName("UTF-8"));
 		String fileName = originalFileName;
+		final String area1=request.getParameter("area");
+		final String ff1=request.getParameter("ff");
 		final String repeType = request.getParameter("repeType");
 		// 再次检查上传文件名与目标目录ID
 		if (folderId == null || folderId.length() <= 0 || originalFileName == null || originalFileName.length() <= 0) {
@@ -153,6 +179,8 @@ public class FileServiceImpl extends RangeFileStreamWriter implements FileServic
 								file.transferTo(file2);
 								f.setFileSize(fbu.getFileSize(file));
 								f.setFileCreationDate(ServerTimeUtil.accurateToDay());
+								f.setFileCountry(area1);
+								f.setFileFunction(ff1);
 								if (account != null) {
 									f.setFileCreator(account);
 								} else {
@@ -201,6 +229,8 @@ public class FileServiceImpl extends RangeFileStreamWriter implements FileServic
 		f2.setFileCreationDate(ServerTimeUtil.accurateToDay());
 		f2.setFileName(fileName);
 		f2.setFileParentFolder(folderId);
+		f2.setFileCountry(area1);
+		f2.setFileFunction(ff1);
 		f2.setFilePath(path);
 		f2.setFileSize(fsize);
 		int i = 0;
@@ -222,6 +252,7 @@ public class FileServiceImpl extends RangeFileStreamWriter implements FileServic
 		}
 		return UPLOADERROR;
 	}
+
 
 	// 删除单个文件，该功能与删除多个文件重复，计划合并二者
 	public String deleteFile(final HttpServletRequest request) {

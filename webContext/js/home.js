@@ -24,6 +24,8 @@ var checkFilesTip="提示：您还未选择任何文件，请先选中一些文�
 var winHeight;// 窗口高度
 var uploadKey;// 上传所用的一次性密钥
 
+var countryView;//國家視圖對象（wzy）
+
 // 界面功能方法定义
 // 页面初始化
 $(function() {
@@ -32,6 +34,8 @@ $(function() {
     }
 	getServerOS();// 得到服务器操作系统信息
 	showFolderView("root");// 显示根节点页面视图
+    getCountry();//获取所有国家（wzy）
+
 	// 点击空白处取消选中文件（已尝试兼容火狐，请期待用户反馈，如不好使再改）
 	$(document).click(function(e) {
 		var filetable = $("#filetable")[0];
@@ -60,6 +64,14 @@ $(function() {
 	$('#loginModal').on('hidden.bs.modal', function(e) {
 		$("#accountid").val('');
 		$("#accountpwd").val('');
+		$("#accountidbox").removeClass("has-error");
+		$("#accountpwdbox").removeClass("has-error");
+		$("#alertbox").removeClass("alert");
+		$("#alertbox").removeClass("alert-danger");
+		$("#alertbox").text("");
+		$("#vercodebox").html("");
+		$("#vercodebox").removeClass("show");
+		$("#vercodebox").addClass("hidden");
 	});
 	// 各个模态框的打开判定及回车响应功能。该功能仅对“首选”的按钮有效，对其他按钮无效，以避免用户误操作。
 	$('.modal').on('shown.bs.modal', function(e) {
@@ -362,6 +374,22 @@ function getServerOS() {
 	});
 }
 
+//获取所有国家（wzy）
+function getCountry(){
+	$.ajax({
+        type : 'POST',
+        url : 'homeController/getCountryView.ajax',
+        success : function(result) {
+            countryView = eval("(" + result + ")");
+            $.each(countryView,function(i,item){
+                $("#area").append("<option value="+item.countryId+">"+item.countryName+"</option>");
+			});
+		},
+        error : function() {
+        }
+	});
+}
+
 // 获取实时文件夹视图
 function showFolderView(fid,targetId) {
 	startLoading();
@@ -397,6 +425,8 @@ function showFolderView(fid,targetId) {
 				$("#sortByFN").removeClass();
 				$("#sortByCD").removeClass();
 				$("#sortByFS").removeClass();
+				$("#sortByFC").removeClass();
+				$("#sortByFF").removeClass();
 				$("#sortByCN").removeClass();
 				showFolderTable(folderView);
 				if(targetId != null && targetId.length > 0){
@@ -490,18 +520,23 @@ function dologin() {
 
 // 发送加密文本
 function sendLoginInfo(encrypted) {
+	
 	$.ajax({
 		type : "POST",
 		dataType : "text",
 		url : "homeController/doLogin.ajax",
 		data : {
-			encrypted : encrypted
+			encrypted : encrypted,
+			vercode : $("#vercode").val()
 		},
 		success : function(result) {
 			finishLogin();
 			$("#alertbox").removeClass("alert");
 			$("#alertbox").removeClass("alert-danger");
 			$("#alertbox").text("");
+			$("#vercodebox").html("");
+			$("#vercodebox").removeClass("show");
+			$("#vercodebox").addClass("hidden");
 			switch (result) {
 			case "permitlogin":
 				$("#accountidbox").removeClass("has-error");
@@ -523,6 +558,11 @@ function sendLoginInfo(encrypted) {
 				$("#alertbox").addClass("alert-danger");
 				$("#alertbox").text("提示：登录失败，密码错误或未设置");
 				break;
+			case "needsubmitvercode":
+				$("#vercodebox").html("<label id='vercodetitle' class='col-sm-7'><img id='showvercode' class='vercodeimg' alt='点击获取验证码' src='homeController/getNewVerCode.do?s="+(new Date()).getTime()+"' onclick='getNewVerCode()'></label><div class='col-sm-5'><input type='text' class='form-control' id='vercode' placeholder='验证码……'></div>");
+				$("#vercodebox").removeClass("hidden");
+				$("#vercodebox").addClass("show");
+				break;
 			case "error":
 				$("#alertbox").addClass("alert");
 				$("#alertbox").addClass("alert-danger");
@@ -542,6 +582,11 @@ function sendLoginInfo(encrypted) {
 			$("#alertbox").text("提示：登录请求失败，请检查网络或服务器运行状态");
 		}
 	});
+}
+
+// 获取一个新的验证码
+function getNewVerCode(){
+	$("#showvercode").attr("src","homeController/getNewVerCode.do?s="+(new Date()).getTime());
 }
 
 // 注销操作
@@ -702,7 +747,7 @@ function showFolderTable(folderView) {
 	if (parentpath != null && parentpath != "null") {
 		$("#foldertable")
 				.append(
-						"<tr onclick='returnPF()'><td><button onclick='returnPF()' class='btn btn-link btn-xs'>../</button></td><td class='hiddenColumn'>--</td><td>--</td><td class='hiddenColumn'>--</td><td>--</td></tr>");
+				"<tr onclick='returnPF()'><td><button onclick='returnPF()' class='btn btn-link btn-xs'>../</button></td><td class='hiddenColumn'>--</td><td>--</td><td class='hiddenColumn'>--</td><td>--</td><td class='hiddenColumn'>--</td><td>--</td></tr>");
 	}
 	var authList = folderView.authList;
 	var aD = false;
@@ -730,7 +775,7 @@ function showFolderTable(folderView) {
 								+ '"' + f.folderId + '"'
 								+ ")' class='btn btn-link btn-xs'>/"
 								+ f.folderName + "</button></td><td class='hiddenColumn'>"
-								+ f.folderCreationDate + "</td><td>--</td><td class='hiddenColumn'>"
+								+ f.folderCreationDate + "</td><td>--</td><td>--</td><td>--</td>"+"<td class='hiddenColumn'>"
 								+ f.folderCreator + "</td><td>";
 						if (aD) {
 							folderRow = folderRow
@@ -766,7 +811,7 @@ function showFolderTable(folderView) {
 						if (!aR && !aD && !aO) {
 							folderRow = folderRow + "--";
 						}
-						folderRow = folderRow + "</td></tr>";
+						folderRow = folderRow +"</td></tr>";
 						$("#foldertable").append(folderRow);
 					});
 	$
@@ -783,7 +828,7 @@ function showFolderTable(folderView) {
 						}else{
 							fileRow=fileRow+"<td>" + fi.fileSize + "MB</td>";
 						}
-						fileRow=fileRow +"<td class='hiddenColumn'>" + fi.fileCreator + "</td><td>";
+						fileRow=fileRow +"<td class='hiddenColumn'>" + fi.fileCountry + "</td>"+"<td>" + fi.fileFunction + "</td>"+"<td class='hiddenColumn'>" + fi.fileCreator + "</td><td>";
 						if (aL) {
 							fileRow = fileRow
 									+ "<button onclick='showDownloadModel("
@@ -1253,6 +1298,8 @@ function selectFileUpLoadModelEnd(t){
 // 执行文件上传并实现上传进度显示
 function doupload(count) {
 	var fcount = fs.length;
+	var area = $("#area").val();
+	var ff=$("#ff").val();
 	$("#pros").width("0%");// 先将进度条置0
 	$("#pros").attr('aria-valuenow',"0");
 	var uploadfile = fs[count - 1];// 获取要上传的文件
@@ -1271,6 +1318,8 @@ function doupload(count) {
 		fd.append("file", uploadfile);// 将文件对象添加到FormData对象中，字段名为uploadfile
 		fd.append("folderId", locationpath);
 		fd.append("uploadKey", uploadKey);
+		fd.append("area",area);
+		fd.append("ff",ff);
 		if(repeModelList != null && repeModelList[fname] != null){
 			if(repeModelList[fname] == 'skip'){
 				$("#uls_" + count).text("[已完成]");
@@ -1992,6 +2041,8 @@ function sortbyfn(){
 	$("#sortByFN").addClass("glyphicon glyphicon-triangle-bottom");
 	$("#sortByCD").removeClass();
 	$("#sortByFS").removeClass();
+	$("#sortByFC").removeClass();
+	$("#sortByFF").removeClass();
 	$("#sortByCN").removeClass();
 	folderView.fileList.sort(function(v1,v2){
 		return v1.fileName.localeCompare(v2.fileName,"zh");
@@ -2007,6 +2058,8 @@ function sortbycd(){
 	$("#sortByFN").removeClass();
 	$("#sortByCD").addClass("glyphicon glyphicon-triangle-bottom");
 	$("#sortByFS").removeClass();
+	$("#sortByFC").removeClass();
+	$("#sortByFF").removeClass();
 	$("#sortByCN").removeClass();
 	folderView.fileList.sort(function(v1,v2){
 		var v1DateStr=v1.fileCreationDate.replace("年","-").replace("月","-").replace("日","");
@@ -2028,12 +2081,50 @@ function sortbyfs(){
 	$("#sortByFN").removeClass();
 	$("#sortByCD").removeClass();
 	$("#sortByFS").addClass("glyphicon glyphicon-triangle-bottom");
+	$("#sortByFC").removeClass();
+	$("#sortByFF").removeClass();
 	$("#sortByCN").removeClass();
 	folderView.fileList.sort(function(v1,v2){
 		return v2.fileSize-v1.fileSize;
 	});
 	showFolderTable(folderView);
 }
+
+//按国家排序
+function sortbyfc(){
+	$("#sortByFN").removeClass();
+	$("#sortByCD").removeClass();
+	$("#sortByFS").removeClass();
+	$("#sortByFC").addClass("glyphicon glyphicon-triangle-bottom");
+	$("#sortByFF").removeClass();
+	$("#sortByCN").removeClass();
+	folderView.fileList.sort(function(v1,v2){
+		return v1.fileCountry.localeCompare(v2.fileCountry,"zh");
+	});
+	folderView.folderList.sort(function(v1,v2){
+		return v1.folderCountry.localeCompare(v2.folderCountry,"zh");
+	});
+	showFolderTable(folderView);
+}
+
+
+//按功能排序
+function sortbyff(){
+	$("#sortByFN").removeClass();
+	$("#sortByCD").removeClass();
+	$("#sortByFS").removeClass();
+	$("#sortByFC").removeClass();
+	$("#sortByFF").addClass("glyphicon glyphicon-triangle-bottom");
+	$("#sortByCN").removeClass();
+	folderView.fileList.sort(function(v1,v2){
+		return v1.fileFunction.localeCompare(v2.fileCountry,"zh");
+	});
+	folderView.folderList.sort(function(v1,v2){
+		return v1.folderFunction.localeCompare(v2.folderFunction,"zh");
+	});
+	showFolderTable(folderView);
+}
+
 
 // 按创建者排序
 function sortbycn(){
@@ -2055,6 +2146,8 @@ function showOriginFolderView(){
 	$("#sortByFN").removeClass();
 	$("#sortByCD").removeClass();
 	$("#sortByFS").removeClass();
+	$("#sortByFC").removeClass();
+	$("#sortByFF").removeClass();
 	$("#sortByCN").removeClass();
 	if(screenedFoldrView!=null){
 		folderView=$.extend(true, {}, screenedFoldrView);
@@ -2271,6 +2364,8 @@ function selectInThisPath(keyworld){
 		$("#sortByFN").removeClass();
 		$("#sortByCD").removeClass();
 		$("#sortByFS").removeClass();
+		$("#sortByFC").removeClass();
+		$("#sortByFF").removeClass();
 		$("#sortByCN").removeClass();
 		folderView=$.extend(true, {}, screenedFoldrView);
 		showFolderTable(folderView);
@@ -2319,6 +2414,8 @@ function selectInCompletePath(keyworld){
 				$("#sortByFN").removeClass();
 				$("#sortByCD").removeClass();
 				$("#sortByFS").removeClass();
+				$("#sortByFC").removeClass();
+				$("#sortByFF").removeClass();
 				$("#sortByCN").removeClass();
 				showFolderTable(folderView);
 			}

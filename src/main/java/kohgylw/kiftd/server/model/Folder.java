@@ -32,8 +32,9 @@ public class Folder
     public void setFolderCreationDate(final String folderCreationDate) {
         this.folderCreationDate = folderCreationDate;
     }
-    
-    public String getFolderCreator() {
+
+
+	public String getFolderCreator() {
         return this.folderCreator;
     }
     

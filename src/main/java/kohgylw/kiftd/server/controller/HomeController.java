@@ -1,11 +1,13 @@
 package kohgylw.kiftd.server.controller;
 
+
 import org.springframework.stereotype.*;
 import javax.annotation.*;
 import kohgylw.kiftd.server.service.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.*;
 import javax.servlet.http.*;
+
 
 /**
  * 
@@ -37,6 +39,9 @@ public class HomeController {
 	private ShowPictureService sps;
 	@Resource
 	private PlayAudioService pas;
+	@Resource
+	private CountryService cs;
+
 
 	@RequestMapping({ "/getServerOS.ajax" })
 	@ResponseBody
@@ -55,11 +60,24 @@ public class HomeController {
 	public String doLogin(final HttpServletRequest request, final HttpSession session) {
 		return this.as.checkLoginRequest(request, session);
 	}
+	
+	//获取一个新验证码并存入请求者的Session中
+	@RequestMapping({ "/getNewVerCode.do" })
+	public void getNewVerCode(final HttpServletRequest request, final HttpServletResponse response,final HttpSession session) {
+		as.getNewLoginVerCode(request, response,session);
+	}
 
 	@RequestMapping(value = { "/getFolderView.ajax" }, produces = { CHARSET_BY_AJAX })
 	@ResponseBody
 	public String getFolderView(final String fid, final HttpSession session, final HttpServletRequest request) {
 		return fvs.getFolderViewToJson(fid, session, request);
+	}
+
+	//获取所有国家(wzy)
+	@RequestMapping(value = { "/getCountryView.ajax" }, produces = { CHARSET_BY_AJAX })
+	@ResponseBody
+	public String getCountryView(final HttpServletRequest request) {
+		return cs.getCountryViewToJson(request);
 	}
 
 	@RequestMapping({ "/doLogout.ajax" })
@@ -89,8 +107,9 @@ public class HomeController {
 	@RequestMapping(value = { "/douploadFile.ajax" }, produces = { CHARSET_BY_AJAX })
 	@ResponseBody
 	public String douploadFile(final HttpServletRequest request, final HttpServletResponse response,
-			final MultipartFile file) {
-		return this.fis.doUploadFile(request, response, file);
+			final MultipartFile file,@RequestParam(value = "area",required = false) String area,
+			@RequestParam(value = "ff",required = false) String ff) {
+		return this.fis.doUploadFile(request, response, file,area,ff);
 	}
 
 	@RequestMapping(value = { "/checkUploadFile.ajax" }, produces = { CHARSET_BY_AJAX })

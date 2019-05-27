@@ -66,8 +66,28 @@ public class FileNodeUtil {
 				state1.close();
 				final Statement state2 = conn.createStatement();
 				state2.execute(
-						"CREATE TABLE IF NOT EXISTS FILE(file_id VARCHAR(128) PRIMARY KEY,file_name VARCHAR(128) NOT NULL,file_size VARCHAR(128) NOT NULL,file_parent_folder varchar(128) NOT NULL,file_creation_date varchar(128) NOT NULL,file_creator varchar(128) NOT NULL,file_path varchar(128) NOT NULL)");
+						"CREATE TABLE IF NOT EXISTS FILE(file_id VARCHAR(128) PRIMARY KEY,file_name VARCHAR(128) NOT NULL,file_size VARCHAR(128) NOT NULL,file_parent_folder varchar(128) NOT NULL,file_creation_date varchar(128) NOT NULL,file_country_id varchar(128) ,file_function varchar(128) NOT NULL,file_creator varchar(128) NOT NULL,file_path varchar(128) NOT NULL)");
+				//新建字段国家id（wzy）
 				state2.close();
+
+				//建国家表（wzy）
+				final Statement state5 = conn.createStatement();
+				state5.execute(
+						"CREATE TABLE IF NOT EXISTS COUNTRY(country_id VARCHAR(128) PRIMARY KEY,country_name VARCHAR(128) NOT NULL)");
+				state5.close();
+
+                //建功能表（wzy）
+				final Statement state6 = conn.createStatement();
+				state6.execute(
+						"CREATE TABLE IF NOT EXISTS FEATURE(feature_id VARCHAR(128) PRIMARY KEY,feature_name VARCHAR(128) NOT NULL)");
+				state6.close();
+
+				//建文件功能关系表（wzy）
+				final Statement state7 = conn.createStatement();
+				state7.execute(
+						"CREATE TABLE IF NOT EXISTS FILE_FEATURE_RELATIONSHIP(file_feature_id VARCHAR(128) PRIMARY KEY,file_id VARCHAR(128) NOT NULL, feature_id VARCHAR(128) NOT NULL)");
+				state7.close();
+
 				// 为了匹配之前的版本而设计的兼容性字段设置，后续可能会删除
 				if (!ConfigureReader.instance().useMySQL()) {
 					final Statement state3 = conn.createStatement();

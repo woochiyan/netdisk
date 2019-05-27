@@ -25,7 +25,7 @@ import kohgylw.kiftd.util.file_system_manager.pojo.Folder;
  */
 public class FilesTable extends JTable {
 
-	private static final String[] columns = new String[] { "名称", "创建日期", "大小（MB）", "创建者" };
+	private static final String[] columns = new String[] { "名称", "创建日期", "大小（MB）", "国家", "功能", "创建者" };
 	private static List<Folder> folders;// 当前显示的文件夹列表
 
 	/**  */
@@ -79,6 +79,12 @@ public class FilesTable extends JTable {
 								return rowIndex < folders.size() ? "--"
 										: files.get(rowIndex - folders.size()).getFileSize();
 							case 3:
+								return rowIndex < folders.size() ? "--"
+										: files.get(rowIndex - folders.size()).getFileCountry();
+							case 4:
+								return rowIndex < folders.size() ? "--"
+										: files.get(rowIndex - folders.size()).getFileFunction();
+							case 5:
 								return rowIndex < folders.size() ? folders.get(rowIndex).getFolderCreator()
 										: files.get(rowIndex - folders.size()).getFileCreator();
 							default:

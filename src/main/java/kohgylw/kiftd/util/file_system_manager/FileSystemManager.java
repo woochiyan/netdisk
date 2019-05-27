@@ -75,12 +75,12 @@ public class FileSystemManager {
 			selectNodeById = c.prepareStatement("SELECT * FROM FILE WHERE file_id = ?");
 			selectNodeByFolderId = c.prepareStatement("SELECT * FROM FILE WHERE file_parent_folder = ?");
 			selectFoldersByParentFolderId = c.prepareStatement("SELECT * FROM FOLDER WHERE folder_parent = ?");
-			insertNode = c.prepareStatement("INSERT INTO FILE VALUES(?,?,?,?,?,?,?)");
+			insertNode = c.prepareStatement("INSERT INTO FILE VALUES(?,?,?,?,?,?,?,?,?)");
 			insertFolder = c.prepareStatement("INSERT INTO FOLDER VALUES(?,?,?,?,?,?)");
 			deleteNodeById = c.prepareStatement("DELETE FROM FILE WHERE file_id = ?");
 			deleteFolderById = c.prepareStatement("DELETE FROM FOLDER WHERE folder_id = ?");
 			updateNodeById = c.prepareStatement(
-					"UPDATE FILE SET file_name = ? , file_size = ? , file_parent_folder = ? , file_creation_date = ? , file_creator = ? , file_path = ? WHERE file_id = ?");
+					"UPDATE FILE SET file_name = ? , file_size = ? , file_parent_folder = ? , file_creation_date = ? , file_country = ? , file_function = ? , file_creator = ? , file_path = ? WHERE file_id = ?");
 			updateFolderById = c.prepareStatement(
 					"UPDATE FOLDER SET folder_name= ? , folder_creation_date = ? , folder_creator = ? , folder_parent = ? , folder_constraint = ? WHERE folder_id = ?");
 		} catch (SQLException e) {
@@ -351,8 +351,10 @@ public class FileSystemManager {
 		insertNode.setString(3, n.getFileSize());
 		insertNode.setString(4, n.getFileParentFolder());
 		insertNode.setString(5, n.getFileCreationDate());
-		insertNode.setString(6, n.getFileCreator());
-		insertNode.setString(7, n.getFilePath());
+		insertNode.setString(6, n.getFileCountry());
+		insertNode.setString(7, n.getFileFunction());
+		insertNode.setString(8, n.getFileCreator());
+		insertNode.setString(9, n.getFilePath());
 		insertNode.execute();
 		return insertNode.getUpdateCount();
 	}
@@ -377,6 +379,8 @@ public class FileSystemManager {
 		node.setFileSize(r.getString("file_size"));
 		node.setFileParentFolder(r.getString("file_parent_folder"));
 		node.setFileCreationDate(r.getString("file_creation_date"));
+		node.setFileCountry(r.getString("file_country"));
+		node.setFileFunction(r.getString("file_function"));
 		node.setFileCreator(r.getString("file_creator"));
 		node.setFilePath(r.getString("file_path"));
 		return node;
@@ -412,6 +416,8 @@ public class FileSystemManager {
 					// 覆盖
 					node = nodes.parallelStream().filter((e) -> e.getFileName().equals(f.getName())).findFirst().get();
 					node.setFileCreationDate(ServerTimeUtil.accurateToDay());
+					node.setFileCountry("--");
+					node.setFileFunction("--");
 					node.setFileCreator("SYS_IN");
 					int mb = (int) (size / 1024L / 1024L);
 					node.setFileSize(mb + "");
@@ -440,6 +446,8 @@ public class FileSystemManager {
 				target = new File(fileBlocks, path);
 				target.createNewFile();
 				node.setFileCreationDate(ServerTimeUtil.accurateToDay());
+				node.setFileCountry("--");
+				node.setFileFunction("--");
 				node.setFileCreator("SYS_IN");
 				int mb = (int) (size / 1024L / 1024L);
 				node.setFileSize(mb + "");
@@ -574,8 +582,10 @@ public class FileSystemManager {
 		updateNodeById.setString(3, n.getFileParentFolder());
 		updateNodeById.setString(4, n.getFileCreationDate());
 		updateNodeById.setString(5, n.getFileCreator());
-		updateNodeById.setString(6, n.getFilePath());
-		updateNodeById.setString(7, n.getFileId());
+		updateNodeById.setString(6, n.getFileCountry());
+		updateNodeById.setString(7, n.getFileFunction());
+		updateNodeById.setString(8, n.getFilePath());
+		updateNodeById.setString(9, n.getFileId());
 		updateNodeById.execute();
 		return updateNodeById.getUpdateCount();
 	}

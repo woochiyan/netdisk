@@ -5,7 +5,7 @@
 		<result column="folder_id" jdbcType="VARCHAR" property="folderId" />
 		<result column="folder_name" jdbcType="VARCHAR" property="folderName" />
 		<result column="folder_creation_date" jdbcType="VARCHAR"
-			property="folderCreationDate" />
+			property="folderCreationDate" />	
 		<result column="folder_creator" jdbcType="VARCHAR" property="folderCreator" />
 		<result column="folder_parent" jdbcType="VARCHAR" property="folderParent" />
 		<result column="folder_constraint" jdbcType="INTEGER" property="folderConstraint" />

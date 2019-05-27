@@ -5,5 +5,5 @@ import java.util.*;
 
 public interface CountryMapper {
 
-    List<Country> showCountry();
+    List<Country> getCountries();
 }

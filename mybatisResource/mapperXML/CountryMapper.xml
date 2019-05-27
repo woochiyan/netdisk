@@ -6,8 +6,8 @@
         <result column="country_name" jdbcType="VARCHAR" property="countryName" />
     </resultMap>
 
-    <select id="showCountry" resultMap="BaseResultMap">
-        SELECT * FROM COUNTRY
+    <select id="getCountries" resultMap="BaseResultMap">
+        SELECT * FROM COUNTRY;
     </select>
 
 </mapper>

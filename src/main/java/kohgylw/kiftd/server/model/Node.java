@@ -7,6 +7,8 @@ public class Node
     private String fileSize;
     private String fileParentFolder;
     private String fileCreationDate;
+    private String fileCountry;
+    private String fileFunction;
     private String fileCreator;
     private String filePath;
     
@@ -50,7 +52,23 @@ public class Node
         this.fileCreationDate = fileCreationDate;
     }
     
-    public String getFileCreator() {
+    public String getFileCountry() {
+		return fileCountry;
+	}
+
+	public void setFileCountry(String fileCountry) {
+		this.fileCountry = fileCountry;
+	}
+
+	public String getFileFunction() {
+		return fileFunction;
+	}
+
+	public void setFileFunction(String fileFunction) {
+		this.fileFunction = fileFunction;
+	}
+
+	public String getFileCreator() {
         return this.fileCreator;
     }
     
