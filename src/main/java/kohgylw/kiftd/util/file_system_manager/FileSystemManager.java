@@ -352,7 +352,6 @@ public class FileSystemManager {
 		insertNode.setString(4, n.getFileParentFolder());
 		insertNode.setString(5, n.getFileCreationDate());
 		insertNode.setString(6, n.getFileCountry());
-		insertNode.setString(7, n.getFileFunction());
 		insertNode.setString(8, n.getFileCreator());
 		insertNode.setString(9, n.getFilePath());
 		insertNode.execute();
@@ -380,7 +379,6 @@ public class FileSystemManager {
 		node.setFileParentFolder(r.getString("file_parent_folder"));
 		node.setFileCreationDate(r.getString("file_creation_date"));
 		node.setFileCountry(r.getString("file_country"));
-		node.setFileFunction(r.getString("file_function"));
 		node.setFileCreator(r.getString("file_creator"));
 		node.setFilePath(r.getString("file_path"));
 		return node;
@@ -417,7 +415,6 @@ public class FileSystemManager {
 					node = nodes.parallelStream().filter((e) -> e.getFileName().equals(f.getName())).findFirst().get();
 					node.setFileCreationDate(ServerTimeUtil.accurateToDay());
 					node.setFileCountry("--");
-					node.setFileFunction("--");
 					node.setFileCreator("SYS_IN");
 					int mb = (int) (size / 1024L / 1024L);
 					node.setFileSize(mb + "");
@@ -447,7 +444,6 @@ public class FileSystemManager {
 				target.createNewFile();
 				node.setFileCreationDate(ServerTimeUtil.accurateToDay());
 				node.setFileCountry("--");
-				node.setFileFunction("--");
 				node.setFileCreator("SYS_IN");
 				int mb = (int) (size / 1024L / 1024L);
 				node.setFileSize(mb + "");
@@ -583,7 +579,6 @@ public class FileSystemManager {
 		updateNodeById.setString(4, n.getFileCreationDate());
 		updateNodeById.setString(5, n.getFileCreator());
 		updateNodeById.setString(6, n.getFileCountry());
-		updateNodeById.setString(7, n.getFileFunction());
 		updateNodeById.setString(8, n.getFilePath());
 		updateNodeById.setString(9, n.getFileId());
 		updateNodeById.execute();

@@ -478,9 +478,9 @@
 	</div>
 	<!-- end 删除提示框 -->
 	<!-- 重命名框 -->
-	<div class="modal fade bs-example-modal-sm" id="renameFileModal"
+	<div class="modal fade " id="renameFileModal"
 		tabindex="-1" role="dialog" aria-labelledby="renameFileMolderTitle">
-		<div class="modal-dialog modal-sm" role="document">
+		<div class="modal-dialog " role="document">
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal"
@@ -488,21 +488,36 @@
 						<span aria-hidden="true">&times;</span>
 					</button>
 					<h4 class="modal-title" id="renameFileMolderTitle">
-						<span class="glyphicon glyphicon-wrench"></span> 重命名文件
+						<span class="glyphicon glyphicon-wrench"></span> 修改
 					</h4>
 				</div>
+
+				<!--<div class="modal-body">-->
+					<!--<form class="form-horizontal">-->
+						<!--<div class="form-group" id="filerenamebox">-->
+							<!--<label for="folderid" id="filenametitle"-->
+								<!--class="col-sm-3 control-label">名称：</label>-->
+							<!--<div class="col-sm-9">-->
+								<!--<input type="text" class="form-control" id="newfilename"-->
+									<!--placeholder="请输入文件的名称……">-->
+							<!--</div>-->
+						<!--</div>-->
+						<!--<div id="newFileNamealert" role="alert"></div>-->
+					<!--</form>-->
+				<!--</div>-->
 				<div class="modal-body">
-					<form class="form-horizontal">
-						<div class="form-group" id="filerenamebox">
-							<label for="folderid" id="filenametitle"
-								class="col-sm-3 control-label">名称：</label>
-							<div class="col-sm-9">
-								<input type="text" class="form-control" id="newfilename"
-									placeholder="请输入文件的名称……">
-							</div>
-						</div>
-						<div id="newFileNamealert" role="alert"></div>
-					</form>
+					<h5>
+						名称：<span id="selectcount"></span>
+					</h5>
+					<div class="col-sm-9">
+					    <input type="text" class="form-control" id="newfilename" placeholder="请输入文件的名称……"/>
+					</div>
+					<!-- <h5>国家、功能选择栏：</h5> -->
+					<select id="areaX" class="selectpicker show-tick" title="请选择码流国家" name="areaX" data-live-search="true" data-size="5">
+					</select>
+					<select id="ffX" class="selectpicker show-tick" multiple title="请选择码流功能" name='ffX' data-live-search="true" data-size="5"
+							multiple>
+					</select>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>

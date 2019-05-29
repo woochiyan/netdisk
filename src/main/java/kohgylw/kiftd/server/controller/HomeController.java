@@ -116,9 +116,8 @@ public class HomeController {
 	@RequestMapping(value = { "/douploadFile.ajax" }, produces = { CHARSET_BY_AJAX })
 	@ResponseBody
 	public String douploadFile(final HttpServletRequest request, final HttpServletResponse response,
-			final MultipartFile file,@RequestParam(value = "area",required = false) String area,
-			@RequestParam(value = "ff",required = false) String ff) {
-		return this.fis.doUploadFile(request, response, file,area,ff);
+			final MultipartFile file) {
+		return this.fis.doUploadFile(request, response, file);
 	}
 
 	@RequestMapping(value = { "/checkUploadFile.ajax" }, produces = { CHARSET_BY_AJAX })
@@ -138,7 +137,7 @@ public class HomeController {
 		this.fis.doDownloadFile(request, response);
 	}
 
-	@RequestMapping({ "/renameFile.ajax" })
+	@RequestMapping(value={ "/renameFile.ajax" }, produces = { CHARSET_BY_AJAX })
 	@ResponseBody
 	public String renameFile(final HttpServletRequest request) {
 		return this.fis.doRenameFile(request);

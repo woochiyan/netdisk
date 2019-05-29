@@ -18,6 +18,8 @@ public interface NodeMapper
     Node queryById(final String fileId);
     
     int updateFileNameById(final Map<String, String> map);
+
+    int updateFileNameAndCountryById(final Map<String, String> map);
     
     List<Node> queryAll();
     

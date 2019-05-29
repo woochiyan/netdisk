@@ -9,6 +9,7 @@ public class FolderView{
     private List<Folder> parentList;
     private List<Folder> folderList;
     private List<Node> fileList;
+    private List<FileAndFeatureView> fileAndFeatureViewList;
     private String account;
     private List<String> authList;
     private String publishTime;
@@ -40,7 +41,7 @@ public class FolderView{
     public List<Node> getFileList() {
         return this.fileList;
     }
-    
+
     public void setFileList(final List<Node> fileList) {
         this.fileList = fileList;
     }
@@ -67,5 +68,13 @@ public class FolderView{
     
     public void setPublishTime(final String publishTime) {
         this.publishTime = publishTime;
+    }
+
+    public List<FileAndFeatureView> getFileAndFeatureViewList() {
+        return fileAndFeatureViewList;
+    }
+
+    public void setFileAndFeatureViewList(List<FileAndFeatureView> fileAndFeatureViewList) {
+        this.fileAndFeatureViewList = fileAndFeatureViewList;
     }
 }

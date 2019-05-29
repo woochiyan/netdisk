@@ -12,4 +12,6 @@ import java.util.*;
 public interface FeatureMapper {
 
    List<Feature> getFeatures();
+
+   Feature getFeaturesById(final String fid);
 }

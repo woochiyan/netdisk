@@ -6,4 +6,6 @@ import java.util.*;
 public interface CountryMapper {
 
     List<Country> getCountries();
+
+    Country getCountryById(String cid);
 }

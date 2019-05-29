@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kohgylw.kiftd.server.mapper.FileFeatureMapper">
+    <resultMap id="BaseResultMap" type="kohgylw.kiftd.server.model.FileFeature">
+        <result column="file_feature_id" jdbcType="VARCHAR" property="fileFeatureId" />
+        <result column="file_id" jdbcType="VARCHAR" property="fileId" />
+        <result column="feature_id" jdbcType="VARCHAR" property="featureId" />
+    </resultMap>
+
+    <insert id="insertFileIdAndFeatureId" parameterType="kohgylw.kiftd.server.model.FileFeature">
+        INSERT INTO FILE_FEATURE_RELATIONSHIP
+        VALUES(#{fileFeatureId,jdbcType=VARCHAR},#{fileId,jdbcType=VARCHAR},#{featureId,jdbcType=VARCHAR})
+    </insert>
+
+    <select id="getFileFeatureByFileId" parameterType="java.lang.String" resultMap="BaseResultMap">
+        SELECT * FROM FILE_FEATURE_RELATIONSHIP WHERE file_id = #{fid,jdbcType=VARCHAR};
+    </select>
+
+    <delete id="deleteById" parameterType="java.lang.String">
+        DELETE FROM FILE_FEATURE_RELATIONSHIP WHERE
+        file_id = #{fileId,jdbcType=VARCHAR}
+    </delete>
+
+</mapper>

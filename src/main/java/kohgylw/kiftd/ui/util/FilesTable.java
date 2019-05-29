@@ -81,10 +81,8 @@ public class FilesTable extends JTable {
 							case 3:
 								return rowIndex < folders.size() ? "--"
 										: files.get(rowIndex - folders.size()).getFileCountry();
+
 							case 4:
-								return rowIndex < folders.size() ? "--"
-										: files.get(rowIndex - folders.size()).getFileFunction();
-							case 5:
 								return rowIndex < folders.size() ? folders.get(rowIndex).getFolderCreator()
 										: files.get(rowIndex - folders.size()).getFileCreator();
 							default:

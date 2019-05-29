@@ -4,8 +4,8 @@ import kohgylw.kiftd.server.service.*;
 import org.springframework.stereotype.*;
 import javax.annotation.*;
 import kohgylw.kiftd.server.mapper.*;
-import kohgylw.kiftd.server.model.Folder;
-import kohgylw.kiftd.server.model.Node;
+import kohgylw.kiftd.server.model.*;
+
 
 import javax.servlet.http.*;
 import kohgylw.kiftd.server.pojo.*;
@@ -24,6 +24,12 @@ public class FolderViewServiceImpl implements FolderViewService {
 	private NodeMapper flm;
 	@Resource
 	private Gson gson;
+	@Resource
+	private CountryMapper countryMapper;
+	@Resource
+	private FileFeatureMapper fileFeatureMapper;
+	@Resource
+	private FeatureMapper featureMapper;
 
 	@Override
 	public String getFolderViewToJson(final String fid, final HttpSession session, final HttpServletRequest request) {
@@ -47,7 +53,35 @@ public class FolderViewServiceImpl implements FolderViewService {
 			}
 		}
 		fv.setFolderList(fs);
-		fv.setFileList(this.flm.queryByParentFolderId(fid));
+
+		//插入国家id和name
+		List<FileAndFeatureView> fileAndFeatureViewList = new LinkedList<>();
+		for (Node n : this.flm.queryByParentFolderId(fid)) {
+			FileAndFeatureView fileAndFeatureView = new FileAndFeatureView();
+			fileAndFeatureView.setNode(n);
+			if(n.getFileCountry() != null ){
+				Country country = this.countryMapper.getCountryById(n.getFileCountry());
+				fileAndFeatureView.setCountry(country);
+			}
+
+
+			//为每个文件添加功能字段
+			List<Feature> featureList = new LinkedList<>();
+			List<FileFeature> ffList = this.fileFeatureMapper.getFileFeatureByFileId(n.getFileId());
+
+			for (FileFeature ff1 : ffList){
+				Feature feature =this.featureMapper.getFeaturesById(ff1.getFeatureId());
+				featureList.add(feature);
+			}
+			fileAndFeatureView.setFeatureList(featureList);
+
+			fileAndFeatureViewList.add(fileAndFeatureView);
+		}
+		fv.setFileAndFeatureViewList(fileAndFeatureViewList);
+
+
+
+
 		if (account != null) {
 			fv.setAccount(account);
 		}

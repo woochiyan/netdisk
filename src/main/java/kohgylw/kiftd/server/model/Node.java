@@ -8,7 +8,6 @@ public class Node
     private String fileParentFolder;
     private String fileCreationDate;
     private String fileCountry;
-    private String fileFunction;
     private String fileCreator;
     private String filePath;
     
@@ -58,14 +57,6 @@ public class Node
 
 	public void setFileCountry(String fileCountry) {
 		this.fileCountry = fileCountry;
-	}
-
-	public String getFileFunction() {
-		return fileFunction;
-	}
-
-	public void setFileFunction(String fileFunction) {
-		this.fileFunction = fileFunction;
 	}
 
 	public String getFileCreator() {

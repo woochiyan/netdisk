@@ -6,7 +6,7 @@ import javax.servlet.http.*;
 public interface FileService {
 	String checkUploadFile(final HttpServletRequest request, final HttpServletResponse response);
 
-	String doUploadFile(final HttpServletRequest request,final HttpServletResponse response, final MultipartFile file,String area,String ff);
+	String doUploadFile(final HttpServletRequest request,final HttpServletResponse response, final MultipartFile file);
 
 	//void doPost(final HttpServletRequest request, final HttpServletResponse response);
 	

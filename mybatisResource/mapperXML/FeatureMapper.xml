@@ -10,4 +10,8 @@
         SELECT * FROM FEATURE;
     </select>
 
+    <select id="getFeaturesById" parameterType="java.lang.String" resultMap="BaseResultMap">
+        SELECT * FROM FEATURE WHERE feature_id = #{fid,jdbcType=VARCHAR};
+    </select>
+
 </mapper>

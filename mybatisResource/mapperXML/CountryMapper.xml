@@ -10,4 +10,8 @@
         SELECT * FROM COUNTRY;
     </select>
 
+    <select id="getCountryById" parameterType="java.lang.String" resultMap="BaseResultMap">
+        SELECT * FROM COUNTRY WHERE country_id = #{cid,jdbcType=VARCHAR};
+    </select>
+
 </mapper>
