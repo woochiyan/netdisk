@@ -293,6 +293,7 @@ public class FileServiceImpl extends RangeFileStreamWriter implements FileServic
         }
         // 从节点删除
         if (this.fm.deleteById(fileId) > 0) {
+            this.fileFeatureMapper.deleteById(fileId);
             this.lu.writeDeleteFileEvent(request, file);
             return "deleteFileSuccess";
         }
@@ -458,6 +459,9 @@ public class FileServiceImpl extends RangeFileStreamWriter implements FileServic
                     if (this.fm.deleteById(fileId) <= 0) {
                         return "cannotDeleteFile";
                     }
+                    //删除文件功能关联
+                    this.fileFeatureMapper.deleteById(fileId);
+
                     // 日志记录
                     this.lu.writeDeleteFileEvent(request, file);
                 }
