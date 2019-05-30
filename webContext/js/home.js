@@ -1439,6 +1439,10 @@ function doupload(count) {
                         $("#uploadstatus").text("");
                         $("#selectcount").text("");
                         $('#uploadFileModal').modal('hide');
+                        document.getElementById("area").options.selectedIndex = 0;
+                        document.getElementById("ff").options.selectedIndex = -1;
+                        $('#area').selectpicker('refresh');
+                        $('#ff').selectpicker('refresh');
                         showFolderView(locationpath);
                     }
                 } else if (result == "uploaderror") {
@@ -1659,6 +1663,11 @@ function abortUpload() {
     $("#uploadstatus").html("");
     $("#selectcount").text("");
     $('#uploadFileModal').modal('hide');
+    document.getElementById("area").options.selectedIndex = 0;
+    document.getElementById("ff").options.selectedIndex = -1;
+    $('#area').selectpicker('refresh');
+    $('#ff').selectpicker('refresh');
+
     showFolderView(locationpath);
 }
 
