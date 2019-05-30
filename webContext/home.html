@@ -10,7 +10,7 @@
 	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <title>SCBC</title>
 <!-- Bootstrap基本框架 -->
-<link rel="stylesheet" href="css/bootstrap.min.css">
+<link rel="stylesheet" href="css/bootstrap.css">
 <!-- 全局样式 -->
 <link rel="stylesheet" href="css/overrall.css">
 <!-- 图片查看器插件 -->
@@ -492,32 +492,23 @@
 					</h4>
 				</div>
 
-				<!--<div class="modal-body">-->
-					<!--<form class="form-horizontal">-->
-						<!--<div class="form-group" id="filerenamebox">-->
-							<!--<label for="folderid" id="filenametitle"-->
-								<!--class="col-sm-3 control-label">名称：</label>-->
-							<!--<div class="col-sm-9">-->
-								<!--<input type="text" class="form-control" id="newfilename"-->
-									<!--placeholder="请输入文件的名称……">-->
-							<!--</div>-->
-						<!--</div>-->
-						<!--<div id="newFileNamealert" role="alert"></div>-->
-					<!--</form>-->
-				<!--</div>-->
 				<div class="modal-body">
-					<h5>
-						名称：<span id="selectcount"></span>
-					</h5>
-					<div class="col-sm-9">
-					    <input type="text" class="form-control" id="newfilename" placeholder="请输入文件的名称……"/>
-					</div>
+					<form class="form-horizontal">
+						<div class="form-group" id="filerenamebox">
+							<label for="folderid" id="filenametitle"
+								class="col-sm-3 control-label">名称：</label>
+								<input type="text" class="form-control" id="newfilename"
+									placeholder="请输入文件的名称……">
+						</div>
+				<div class="form-cc">
 					<!-- <h5>国家、功能选择栏：</h5> -->
 					<select id="areaX" class="selectpicker show-tick" title="请选择码流国家" name="areaX" data-live-search="true" data-size="5">
 					</select>
 					<select id="ffX" class="selectpicker show-tick" multiple title="请选择码流功能" name='ffX' data-live-search="true" data-size="5"
 							multiple>
 					</select>
+				</div>
+					</form>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
