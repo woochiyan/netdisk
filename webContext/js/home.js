@@ -56,11 +56,11 @@ $(function () {
         }
     });
     // 关闭打包下载模态框自动停止计时
-    $('#downloadAllCheckedModal').on('hidden.bs.modal', function (e) {
-        if (zipTimer != null) {
-            window.clearInterval(zipTimer);
-        }
-    });
+    // $('#downloadAllCheckedModal').on('hidden.bs.modal', function (e) {
+    //     if (zipTimer != null) {
+    //         window.clearInterval(zipTimer);
+    //     }
+    // });
     // 关闭登陆模态框自动清空输入数据
     $('#loginModal').on('hidden.bs.modal', function (e) {
         $("#accountid").val('');
@@ -295,7 +295,7 @@ $(function () {
         $("#fim_name").text(f.folderName);
         $("#fim_creator").text(f.folderCreator);
         $("#fim_folderCreationDate").text(f.folderCreationDate);
-        $("#fim_statistics").text("共包含 " + folderView.folderList.length + " 个文件夹， " + folderView.fileList.length + " 个文件。");
+        $("#fim_statistics").text("共包含 " + folderView.folderList.length + " 个文件夹， " + folderView.fileAndFeatureViewList.length + " 个文件。");
     });
     // 关闭下载提示模态框自动隐藏下载链接
     $('#downloadModal').on('hidden.bs.modal', function (e) {
@@ -695,13 +695,13 @@ function showAccountView(folderView) {
             $("#uploadFileButtonLi").removeClass("disabled");
             $("#uploadFileButtonLi a").attr("onclick", "showUploadFileModel()");
         }
-        if (checkAuth(authList, "L")) {
-            $("#packageDownloadBox")
-                .html(
-                    "<button class='btn btn-link navbar-btn' onclick='showDownloadAllCheckedModel()'><span class='glyphicon glyphicon-briefcase'></span> 打包下载</button>");
-        } else {
-            $("#packageDownloadBox").html("");
-        }
+        // if (checkAuth(authList, "L")) {
+        //     $("#packageDownloadBox")
+        //         .html(
+        //             "<button class='btn btn-link navbar-btn' onclick='showDownloadAllCheckedModel()'><span class='glyphicon glyphicon-briefcase'></span> 打包下载</button>");
+        // } else {
+        //     $("#packageDownloadBox").html("");
+        // }
         if (checkAuth(authList, "D")) {
             $("#deleteSeelectFileButtonLi").removeClass("disabled");
             $("#deleteSeelectFileButtonLi a").attr("onclick", "showDeleteAllCheckedModel()");
@@ -1892,22 +1892,22 @@ function checkallfile() {
 }
 
 // 显示打包下载模态框
-function showDownloadAllCheckedModel() {
-    $("#downloadAllCheckedBox").html("");
-    $("#downloadAllCheckedLoad").text("");
-    var faf = getCheckedFilesAndFolders();
-    if (faf.size == 0) {
-        $("#downloadAllCheckedName").html(checkFilesTip);
-    } else {
-        $("#downloadAllCheckedName").text(
-            "提示：您确认要打包并下载这" + faf.size + "项么？");
-        $("#downloadAllCheckedBox")
-            .html(
-                "<button id='dclmbutton' type='button' class='btn btn-primary' onclick='downloadAllChecked()'>开始下载</button>");
-        $("#dclmbutton").attr('disabled', false);
-    }
-    $("#downloadAllCheckedModal").modal('toggle');
-}
+// function showDownloadAllCheckedModel() {
+//     $("#downloadAllCheckedBox").html("");
+//     $("#downloadAllCheckedLoad").text("");
+//     var faf = getCheckedFilesAndFolders();
+//     if (faf.size == 0) {
+//         $("#downloadAllCheckedName").html(checkFilesTip);
+//     } else {
+//         $("#downloadAllCheckedName").text(
+//             "提示：您确认要打包并下载这" + faf.size + "项么？");
+//         $("#downloadAllCheckedBox")
+//             .html(
+//                 "<button id='dclmbutton' type='button' class='btn btn-primary' onclick='downloadAllChecked()'>开始下载</button>");
+//         $("#dclmbutton").attr('disabled', false);
+//     }
+//     $("#downloadAllCheckedModal").modal('toggle');
+// }
 
 // 下载选中的所有文件
 function downloadAllChecked() {
@@ -2442,15 +2442,15 @@ function selectInThisPath(keyworld) {
         var reg = new RegExp(keyworld + "+");
         screenedFoldrView = $.extend(true, {}, originFolderView);
         screenedFoldrView.folderList = [];
-        screenedFoldrView.fileList = [];
+        screenedFoldrView.fileAndFeatureViewList = [];
         for (var i = 0, j = originFolderView.folderList.length; i < j; i++) {
             if (reg.test(originFolderView.folderList[i].folderName)) {
                 screenedFoldrView.folderList.push(originFolderView.folderList[i]);
             }
         }
-        for (var i = 0, j = originFolderView.fileList.length; i < j; i++) {
-            if (reg.test(originFolderView.fileList[i].fileName)) {
-                screenedFoldrView.fileList.push(originFolderView.fileList[i]);
+        for (var i = 0, j = originFolderView.fileAndFeatureViewList.length; i < j; i++) {
+            if (reg.test(originFolderView.fileAndFeatureViewList[i].node.fileName)) {
+                screenedFoldrView.fileAndFeatureViewList.push(originFolderView.fileAndFeatureViewList[i]);
             }
         }
         $("#sortByFN").removeClass();

@@ -64,7 +64,6 @@ public class FolderViewServiceImpl implements FolderViewService {
 				fileAndFeatureView.setCountry(country);
 			}
 
-
 			//为每个文件添加功能字段
 			List<Feature> featureList = new LinkedList<>();
 			List<FileFeature> ffList = this.fileFeatureMapper.getFileFeatureByFileId(n.getFileId());
@@ -74,7 +73,6 @@ public class FolderViewServiceImpl implements FolderViewService {
 				featureList.add(feature);
 			}
 			fileAndFeatureView.setFeatureList(featureList);
-
 			fileAndFeatureViewList.add(fileAndFeatureView);
 		}
 		fv.setFileAndFeatureViewList(fileAndFeatureViewList);
@@ -145,7 +143,31 @@ public class FolderViewServiceImpl implements FolderViewService {
 		List<Node> ns = new LinkedList<>();
 		List<Folder> fs = new LinkedList<>();
 		sreachFilesAndFolders(fid, keyWorld, account, ns, fs);
-		sv.setFileList(ns);
+
+		//插入国家id和name
+		List<FileAndFeatureView> fileAndFeatureViewList = new LinkedList<>();
+		for (Node n : ns) {
+			FileAndFeatureView fileAndFeatureView = new FileAndFeatureView();
+			fileAndFeatureView.setNode(n);
+			if(n.getFileCountry() != null ){
+				Country country = this.countryMapper.getCountryById(n.getFileCountry());
+				fileAndFeatureView.setCountry(country);
+			}
+
+			//为每个文件添加功能字段
+			List<Feature> featureList = new LinkedList<>();
+			List<FileFeature> ffList = this.fileFeatureMapper.getFileFeatureByFileId(n.getFileId());
+
+			for (FileFeature ff1 : ffList){
+				Feature feature =this.featureMapper.getFeaturesById(ff1.getFeatureId());
+				featureList.add(feature);
+			}
+			fileAndFeatureView.setFeatureList(featureList);
+			fileAndFeatureViewList.add(fileAndFeatureView);
+		}
+
+		sv.setFileAndFeatureViewList(fileAndFeatureViewList);
+		//sv.setFileList(ns);
 		sv.setFolderList(fs);
 		// 账户视图与文件夹相同
 		if (account != null) {

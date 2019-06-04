@@ -8,7 +8,7 @@
 <meta name="renderer" content="webkit">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<title>SCBC</title>
+<title>SQA</title>
 <!-- Bootstrap基本框架 -->
 <link rel="stylesheet" href="css/bootstrap.css">
 <!-- 全局样式 -->
@@ -36,8 +36,8 @@
 			<div class="col-md-12">
 				<div class="titlebox">
 					<span class="titletext"> <!-- 主标题，如需修改请替换后方标签内的文字 --> <em>
-							码流管理系统 <small> <!-- 副标题，如需修改请替换后方标签内的文字 --> <span
-								class="graytext">SCBC</span>
+							码流管理 <small> <!-- 副标题，如需修改请替换后方标签内的文字 --> <span
+								class="graytext">SQA</span>
 						</small>
 					</em>
 					</span> <span id="tb" class="rightbtn"></span>
@@ -57,12 +57,12 @@
 						刷新 <span class="glyphicon glyphicon-repeat" aria-hidden="true"></span>
 					</button>
 				</p>
-				<p class="subtitle">
-					文件同步时间：<span id="publishTime"></span>
-				</p>
-				<p class="subtitle">
-					OS：<span id="serverOS"><span class="graytext">加载中...</span></span>
-				</p>
+				<!--<p class="subtitle">-->
+					<!--文件同步时间：<span id="publishTime"></span>-->
+				<!--</p>-->
+				<!--<p class="subtitle">-->
+					<!--OS：<span id="serverOS"><span class="graytext">加载中...</span></span>-->
+				<!--</p>-->
 				<div id="filetable" class="panel panel-default" unselectable="on"
 					onselectstart="return false;" style="-moz-user-select: none;">
 					<!-- 文件列表头部，也就是操作栏 -->
@@ -479,12 +479,12 @@
 	<!-- end 删除提示框 -->
 	<!-- 重命名框 -->
 	<div class="modal fade " id="renameFileModal"
-		tabindex="-1" role="dialog" aria-labelledby="renameFileMolderTitle">
+		 tabindex="-1" role="dialog" aria-labelledby="renameFileMolderTitle">
 		<div class="modal-dialog " role="document">
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal"
-						aria-label="Close">
+							aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
 					<h4 class="modal-title" id="renameFileMolderTitle">
@@ -496,18 +496,18 @@
 					<form class="form-horizontal">
 						<div class="form-group" id="filerenamebox">
 							<label for="folderid" id="filenametitle"
-								class="col-sm-3 control-label">名称：</label>
-								<input type="text" class="form-control" id="newfilename"
-									placeholder="请输入文件的名称……">
+								   class="col-sm-3 control-label">名称：</label>
+							<input type="text" class="form-control" id="newfilename"
+								   placeholder="请输入文件的名称……">
 						</div>
-				<div class="form-cc">
-					<!-- <h5>国家、功能选择栏：</h5> -->
-					<select id="areaX" class="selectpicker show-tick" title="请选择码流国家" name="areaX" data-live-search="true" data-size="5">
-					</select>
-					<select id="ffX" class="selectpicker show-tick" multiple title="请选择码流功能" name='ffX' data-live-search="true" data-size="5"
-							multiple>
-					</select>
-				</div>
+						<div class="form-cc">
+							<!-- <h5>国家、功能选择栏：</h5> -->
+							<select id="areaX" class="selectpicker show-tick" title="请选择码流国家" name="areaX" data-live-search="true" data-size="5">
+							</select>
+							<select id="ffX" class="selectpicker show-tick" multiple title="请选择码流功能" name='ffX' data-live-search="true" data-size="5"
+									multiple>
+							</select>
+						</div>
 					</form>
 				</div>
 				<div class="modal-footer">
@@ -519,33 +519,33 @@
 	</div>
 	<!-- end 重命名 -->
 	<!-- 打包下载提示框 -->
-	<div class="modal fade bs-example-modal-sm"
-		id="downloadAllCheckedModal" tabindex="-1" role="dialog"
-		aria-labelledby="downloadAllCheckedModalTitle">
-		<div class="modal-dialog modal-sm" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"
-						aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-					<h4 class="modal-title" id="downloadAllCheckedModalTitle">
-						<span class="glyphicon glyphicon-cloud-download"></span> 打包下载
-					</h4>
-				</div>
-				<div class="modal-body">
-					<h5>
-						<span id="downloadAllCheckedName"></span><span
-							id="downloadAllCheckedLoad" style="text-align: center;"></span>
-					</h5>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-					<span id="downloadAllCheckedBox"></span>
-				</div>
-			</div>
-		</div>
-	</div>
+	<!--<div class="modal fade bs-example-modal-sm"-->
+		<!--id="downloadAllCheckedModal" tabindex="-1" role="dialog"-->
+		<!--aria-labelledby="downloadAllCheckedModalTitle">-->
+		<!--<div class="modal-dialog modal-sm" role="document">-->
+			<!--<div class="modal-content">-->
+				<!--<div class="modal-header">-->
+					<!--<button type="button" class="close" data-dismiss="modal"-->
+						<!--aria-label="Close">-->
+						<!--<span aria-hidden="true">&times;</span>-->
+					<!--</button>-->
+					<!--<h4 class="modal-title" id="downloadAllCheckedModalTitle">-->
+						<!--<span class="glyphicon glyphicon-cloud-download"></span> 打包下载-->
+					<!--</h4>-->
+				<!--</div>-->
+				<!--<div class="modal-body">-->
+					<!--<h5>-->
+						<!--<span id="downloadAllCheckedName"></span><span-->
+							<!--id="downloadAllCheckedLoad" style="text-align: center;"></span>-->
+					<!--</h5>-->
+				<!--</div>-->
+				<!--<div class="modal-footer">-->
+					<!--<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>-->
+					<!--<span id="downloadAllCheckedBox"></span>-->
+				<!--</div>-->
+			<!--</div>-->
+		<!--</div>-->
+	<!--</div>-->
 	<!-- end 打包下载 -->
 	<!--音乐播放模态框-->
 	<div class="modal fade" id="audioPlayerModal" tabindex="-1"
